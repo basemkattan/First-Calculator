@@ -4,8 +4,8 @@ let num2 = "0";
 let op = "";
 let data = "";
 
-const btn = document.querySelectorAll(".bbb");
-const ooo = document.querySelectorAll(".ooo");
+const buttons = document.querySelectorAll(".bbb");
+const oparations = document.querySelectorAll(".ooo");
 const ccc = document.getElementById("rr");
 const ee = document.getElementById("ee");
 const ppp = document.getElementById("ppp");
@@ -14,16 +14,16 @@ const opop = document.getElementById("opop");
 const fff = document.getElementById("fff");
 const n1 = document.getElementById("n1");
 
-ooo.forEach(opopop);
-btn.forEach(btnbtn);
+oparations.forEach(opopop);
+buttons.forEach(btnbtn);
 
-rr.addEventListener("click", dlt);
+ccc.addEventListener("click", dlt);
 ee.addEventListener("click", cal1);
 ppp.addEventListener("click", point);
 fff.addEventListener("click", format);
 
 function cal1() {
-  if (op !== "" && num1 !== "") {
+  if (op !== "") {
     switch (op) {
       case "+":
         num1 = +num1 + +num2;
@@ -40,27 +40,17 @@ function cal1() {
     }
     num1 = num1.toString();
     screen.textContent = num1;
-
     if (isNaN(num1) | (+num1 === Infinity)) {
       new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
-      num1 = "";
-      num2 = "";
-      first = 1;
-      n1.textContent = "";
-      opop.textContent = "";
+      clear();
     } else if (num1.length > 17) {
       new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
       screen.textContent = "Sorry, our screen isn’t that big.";
-      num1 = "";
-      num2 = "";
-      first = 1;
-      n1.textContent = "";
-      op = "";
-      opop.textContent = op;
+      clear();
     } else {
       new Audio("./click.mp3").play();
-      num2 = "";
       first = 1;
+      num2 = "";
       op = "";
       opop.textContent = op;
       n1.textContent = "";
@@ -70,53 +60,61 @@ function cal1() {
   }
 }
 function dlt() {
-  if (first === 1 && num1.length > 0) {
-    num1 = num1.slice(0, -1);
-    screen.textContent = num1;
-    new Audio("./click.mp3").play();
-    if (num1 === "") {
-      num1 = "0";
-      screen.textContent = num1;
+  let currentnum = first === 1 ? num1 : num2;
+  if (currentnum.length > 0) {
+    currentnum = currentnum.slice(0, -1);
+    screen.textContent = currentnum;
+    if (currentnum !== "") {
+      new Audio("./click.mp3").play();
+    }
+    if (currentnum === "") {
+      currentnum = "0";
+      screen.textContent = currentnum;
       new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
     }
-  } else if (first === 0 && num2.length > 0) {
-    num2 = num2.slice(0, -1);
-    screen.textContent = num2;
-    new Audio("./click.mp3").play();
-    if (num2 === "") {
-      num2 = "0";
-      screen.textContent = num2;
-      new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
-    }
-  } else if (first === 0 && num2.length < 1) {
-    screen.textContent = 0;
-    new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
+  }
+  if (first === 1) {
+    num1 = currentnum;
+  } else {
+    num2 = currentnum;
   }
 }
 function point() {
-  new Audio("./click.mp3").play();
-  if (first === 1 && !num1.includes(".")) {
-    if (num1 === "") {
-      num1 = "0";
-    }
-    num1 += ".";
-    screen.textContent = num1;
-  } else if (first === 0 && !num2.includes(".")) {
-    if (num2 === "") {
-      num2 = "0";
-    }
-    num2 += ".";
-    screen.textContent = num2;
+  let currentnum = first === 1 ? num1 : num2;
+
+  if (!currentnum.includes(".")) {
+    new Audio("./click.mp3").play();
+    currentnum += ".";
+    screen.textContent = currentnum;
+  } else {
+    new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
+  }
+  if (first === 1) {
+    num1 = currentnum;
+  } else {
+    num2 = currentnum;
   }
 }
-function format() {
-  new Audio("./click.mp3").play();
-  num1 = "0";
-  num2 = "0";
-  first = 1;
-  opop.textContent = "";
-  n1.textContent = "";
-  screen.textContent = 0;
+function www() {
+  let currentnum = first === 1 ? num1 : num2;
+  if (currentnum.length < 17) {
+    new Audio("./click.mp3").play();
+    currentnum += data;
+    if (currentnum[0] === "0" && !currentnum.includes(".")) {
+      currentnum = currentnum.slice(1);
+    }
+  }
+  if (currentnum.length === 17) {
+    new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
+  }
+
+  if (first === 1) {
+    num1 = currentnum;
+    screen.textContent = num1;
+  } else {
+    num2 = currentnum;
+    screen.textContent = num2;
+  }
 }
 function vvv() {
   if (first === 1) {
@@ -125,90 +123,50 @@ function vvv() {
     first = 0;
     op = data;
     opop.textContent = op;
-    screen.textContent = 0;
+    screen.textContent = num2;
   } else if (first === 0 && data === op) {
-    op = data;
     cal1();
-    n1.textContent = "";
-    opop.textContent = op;
-    first = 1;
-    screen.textContent = num1;
   } else {
     new Audio("./click.mp3").play();
     op = data;
     opop.textContent = op;
   }
 }
-function www() {
-  if (first === 1) {
-    if (num1.length === 17) {
-      new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
-    }
-
-    if (num1.length < 17) {
-      new Audio("./click.mp3").play();
-
-      num1 += data;
-
-      if (num1[0] === "0" && !num1.includes(".")) {
-        num1 = num1.slice(1);
-      }
-    }
-
-    if (num1[0] === "0" && num1[1] === "0" && !num1.includes(".")) {
-      num1 = num1.slice(1);
-    }
-    screen.textContent = num1;
-    if (num1 === "") {
-      screen.textContent = 0;
-    }
-  } else {
-    n1.textContent = num1;
-    if (num2.length < 17) {
-      new Audio("./click.mp3").play();
-      num2 += data;
-      if (num2[0] === "0" && !num2.includes(".")) {
-        num2 = num2.slice(1);
-      }
-    }
-    if (num2.length === 17) {
-      new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
-    }
-    if (num2[0] === "0" && num2[1] === "0" && !num2.includes(".")) {
-      num2 = num2.slice(1);
-    }
-    screen.textContent = num2;
-    if (num2 === "") {
-      screen.textContent = 0;
-    }
-  }
-}
-function opopop(oo) {
-  oo.addEventListener("click", function () {
-    data = oo.dataset.v;
+function opopop(oparation) {
+  oparation.addEventListener("click", function () {
+    data = oparation.dataset.v;
   });
-  oo.addEventListener("click", vvv);
+  oparation.addEventListener("click", vvv);
 }
-function btnbtn(bt) {
-  bt.addEventListener("click", function () {
-    data = bt.dataset.v;
+function btnbtn(button) {
+  button.addEventListener("click", function () {
+    data = button.dataset.v;
   });
-  bt.addEventListener("click", www);
+  button.addEventListener("click", www);
 }
-document.addEventListener("keyup", function (oo) {
-  switch (oo.key) {
-    case "+":
+document.addEventListener("keyup", function (k) {
+  switch (k.key) {
     case "-":
-    case "*":
-      data = oo.key;
+    case "M":
+    case "m":
+      data = "-";
       vvv();
       break;
+    case "p":
+    case "P":
+    case "+":
+      data = "+";
+      vvv();
+      break;
+    case "*":
     case "x":
     case "X":
-      data = "*";
+      data = "x";
       vvv();
       break;
     case "/":
+    case "d":
+    case "D":
       data = "÷";
       vvv();
       break;
@@ -226,7 +184,7 @@ document.addEventListener("keyup", function (oo) {
     case "8":
     case "9":
     case "0":
-      data = oo.key;
+      data = k.key;
       www();
       break;
     case "f":
@@ -240,4 +198,27 @@ document.addEventListener("keyup", function (oo) {
       break;
   }
 });
-
+function clear() {
+  num1 = "0";
+  num2 = "0";
+  first = 1;
+  n1.textContent = "";
+  op = "";
+  opop.textContent = op;
+}
+function format() {
+  if (
+    num1 === "0" &&
+    num2 === "0" &&
+    first === 1 &&
+    n1.textContent === "" &&
+    op === "" &&
+    opop.textContent === op
+  ) {
+    new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
+  } else {
+    new Audio("./click.mp3").play();
+    screen.textContent = 0;
+    clear();
+  }
+}
