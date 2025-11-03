@@ -1,103 +1,123 @@
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #01afff;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #01afff;
 }
-#opop{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+#opop {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
-#n1{
-    font-size:xx-small;
-        font-weight: 500;
-        text-align: end;
-        margin-right: 2px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif\;
+#n1 {
+  font-size: xx-small;
+  font-weight: 500;
+  text-align: end;
+  margin-right: 2px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    sans-serif\;;
 }
-.oo{
-    background-color: #ffd166;
+.oo {
+  background-color: #ffd166;
+  box-shadow: 2px 2px 0 #a68538, 1px 1px 0 #a68538 !important;
 }
-.rr{
-background-color:#f55c47 ;
-color: white;
+.rr {
+  background-color: #f55c47;
+  box-shadow: 2px 2px 0 #9a2f20 , 1px 1px 0 #9a2f20!important;
+  color: white;
 }
-.bb{
-    background-color:#bbdefb ;
-}
-
-#calc{
-background-color: white;
-padding: 10px 10px;
-border-radius: 10px;
-}
-#nnn{
-    font-weight: 600;
-    text-align: end;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif\;
-}
-#screen{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 150px;
-    height: 40px;
-    border: none;
-    border-radius: 12px;
-    background-color: #bfbfbf;
-    padding: 0 10px;
-    
-}
-#buttons{
-    margin-top: 4px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 4px;
-}
-.btn{
-    border: none;
-    height: 33px;
-    border-radius: 9px;
-    font-weight: 600;
-    cursor: pointer;
-    user-select: none;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif\;
-
-
-
-}
-#ee{
-    grid-column: span 2;
-    background-color: #0ad6a0;
-    color: white;
-}
-#fff{
-       grid-column: span 2;
-    background-color: #0ad6a0;
-    color: white; 
-}
-#ee:hover{
-
-    background-color: #01afff;
-} 
-
-
-#fff:hover{
-
-    background-color: #01afff;
-} 
-
-
-.btn:hover{
-    background-color: #01afff;
+.bb {
+  background-color: #bbdefb;
 }
 
-#ee:active{
-        scale: .95;
+#calc {
+  background-color: white;
+  padding: 10px 10px;
+  border-radius: 10px;
+  box-shadow: 7px 7px 0 #e6e8f6, 6px 6px 0 #e6e8f6, 5px 5px 0 #e6e8f6,
+    4px 4px 0 #e6e8f6, 3px 3px 0 #e6e8f6, 2px 2px 0 #e6e8f6, 1px 1px 0 #e6e8f6;
 }
-#fff:active{
-        scale: .95;
+#nnn {
+  font-weight: 600;
+  text-align: end;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",sans-serif\;
 }
-.btn:active{
-    scale: .95;
+#screen {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 150px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  background-color: #bfbfbf;
+  padding: 0 10px;
+  border: 1px solid rgb(161, 161, 161);
+}
+#buttons {
+  margin-top: 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 4px;
+}
+.btn {
+  border: none;
+  height: 33px;
+  border-radius: 9px;
+  font-weight: 600;
+  box-shadow: 2px 2px 0 #15237b , 1px 1px 0 #15237b;
+  cursor: pointer;
+  user-select: none;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    sans-serif\;;
+}
+#ee {
+  grid-column: span 2;
+  box-shadow: 2px 2px 0 #026148 ,1px 1px 0 #026148;
+  background-color: #0ad6a0;
+  color: white;
+}
+#fff {
+  grid-column: span 2;
+  box-shadow: 2px 2px 0 #026148 ,1px 1px 0 #026148;
+  background-color: #0ad6a0;
+  color: white;
+}
+#ee:hover {
+  background-color: #01afff;
+}
+
+#fff:hover {
+  background-color: #01afff;
+}
+
+.btn:hover {
+  background-color: #01afff;
+}
+
+#ee:active {
+  scale: 0.95;
+  box-shadow: none;
+  translate: 2px 2px;
+}
+#fff:active {
+  scale: 0.95;
+  box-shadow: none;
+  translate: 2px 2px;
+}
+.btn:active {
+  box-shadow: none;
+  translate: 2px 2px;
+  scale: 0.95;
+}
+.oo:active {
+  box-shadow: none !important;
+  translate: 2px 2px;
+    scale: 0.95;
+}
+
+
+.active{
+  box-shadow: none !important;
+  translate: 2px 2px !important;
+  scale: 0.95 !important;
 }
