@@ -14,6 +14,21 @@ const opop = document.getElementById("opop");
 const fff = document.getElementById("fff");
 const n1 = document.getElementById("n1");
 
+const plusbtn = document.querySelector(".plusbtn");
+const minusbtn = document.querySelector(".minusbtn");
+const multibtn = document.querySelector(".multibtn");
+const dividebtn = document.querySelector(".dividebtn");
+const sixbtn = document.querySelector(".sixbtn");
+const sevenbtn = document.querySelector(".sevenbtn");
+const eightbtn = document.querySelector(".eightbtn");
+const ninebtn = document.querySelector(".ninebtn");
+const twobtn = document.querySelector(".twobtn");
+const threebtn = document.querySelector(".threebtn");
+const fourbtn = document.querySelector(".fourbtn");
+const fivebtn = document.querySelector(".fivebtn");
+const zerobtn = document.querySelector(".zerobtn");
+const onebtn = document.querySelector(".onebtn");
+
 oparations.forEach(opopop);
 buttons.forEach(btnbtn);
 
@@ -50,7 +65,7 @@ function cal1() {
     } else {
       new Audio("./click.mp3").play();
       first = 1;
-      num2 = "";
+      num2 = "0";
       op = "";
       opop.textContent = op;
       n1.textContent = "";
@@ -81,7 +96,6 @@ function dlt() {
 }
 function point() {
   let currentnum = first === 1 ? num1 : num2;
-
   if (!currentnum.includes(".")) {
     new Audio("./click.mp3").play();
     currentnum += ".";
@@ -107,7 +121,6 @@ function www() {
   if (currentnum.length === 17) {
     new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
   }
-
   if (first === 1) {
     num1 = currentnum;
     screen.textContent = num1;
@@ -131,74 +144,7 @@ function vvv() {
     op = data;
     opop.textContent = op;
   }
-}
-function opopop(oparation) {
-  oparation.addEventListener("click", function () {
-    data = oparation.dataset.v;
-  });
-  oparation.addEventListener("click", vvv);
-}
-function btnbtn(button) {
-  button.addEventListener("click", function () {
-    data = button.dataset.v;
-  });
-  button.addEventListener("click", www);
-}
-document.addEventListener("keyup", function (k) {
-  switch (k.key) {
-    case "-":
-    case "M":
-    case "m":
-      data = "-";
-      vvv();
-      break;
-    case "p":
-    case "P":
-    case "+":
-      data = "+";
-      vvv();
-      break;
-    case "*":
-    case "x":
-    case "X":
-      data = "x";
-      vvv();
-      break;
-    case "/":
-    case "d":
-    case "D":
-      data = "÷";
-      vvv();
-      break;
-    case "=":
-    case "Enter":
-      cal1();
-      break;
-    case "1":
-    case "2":
-    case "3":
-    case "4":
-    case "5":
-    case "6":
-    case "7":
-    case "8":
-    case "9":
-    case "0":
-      data = k.key;
-      www();
-      break;
-    case "f":
-      format();
-      break;
-    case "Backspace":
-      dlt();
-      break;
-    case ".":
-      point();
-      break;
-  }
-});
-function clear() {
+}function clear() {
   num1 = "0";
   num2 = "0";
   first = 1;
@@ -222,3 +168,185 @@ function format() {
     clear();
   }
 }
+function opopop(oparation) {
+  oparation.addEventListener("click", function () {
+    data = oparation.dataset.v;
+  });
+  oparation.addEventListener("click", vvv);
+}
+function btnbtn(button) {
+  button.addEventListener("click", function () {
+    data = button.dataset.v;
+  });
+  button.addEventListener("click", www);
+}
+document.addEventListener("keyup", function (k) {
+  switch (k.key) {
+    case "-":
+    case "M":
+    case "m":
+      minusbtn.classList.remove("active");
+      data = "-";
+      vvv();
+      break;
+    case "p":
+    case "P":
+    case "+":
+      data = "+";
+      vvv();
+      plusbtn.classList.remove("active");
+      break;
+    case "*":
+    case "x":
+    case "X":
+      multibtn.classList.remove("active");
+      data = "x";
+      vvv();
+      break;
+    case "/":
+    case "d":
+    case "D":
+      dividebtn.classList.remove("active");
+      data = "÷";
+      vvv();
+      break;
+    case "=":
+    case "Enter":
+      ee.classList.remove("active");
+      cal1();
+      break;
+    case "1":
+      onebtn.classList.remove("active");
+      break;
+    case "2":
+      twobtn.classList.remove("active");
+      break;
+    case "3":
+      threebtn.classList.remove("active");
+      break;
+    case "4":
+      fourbtn.classList.remove("active");
+      break;
+    case "5":
+      fivebtn.classList.remove("active");
+      break;
+    case "6":
+      sixbtn.classList.remove("active");
+      break;
+    case "7":
+      sevenbtn.classList.remove("active");
+      break;
+    case "8":
+      eightbtn.classList.remove("active");
+      break;
+    case "9":
+      ninebtn.classList.remove("active");
+      break;
+    case "0":
+      zerobtn.classList.remove("active");
+      break;
+    case "f":
+      fff.classList.remove("active");
+      format();
+      break;
+    case "Backspace":
+    case "c":
+    case "C":
+      ccc.classList.remove("active");
+      break;
+    case ".":
+      ppp.classList.remove("active");
+      point();
+      break;
+  }
+});
+document.addEventListener("keydown", function (k) {
+  switch (k.key) {
+    case "-":
+    case "M":
+    case "m":
+      minusbtn.classList.add("active");
+      break;
+    case "p":
+    case "P":
+    case "+":
+      plusbtn.classList.add("active");
+      break;
+    case "*":
+    case "x":
+    case "X":
+      multibtn.classList.add("active");
+      break;
+    case "/":
+    case "d":
+    case "D":
+      dividebtn.classList.add("active");
+      break;
+    case "=":
+    case "Enter":
+      ee.classList.add("active");
+      break;
+    case "1":
+      onebtn.classList.add("active");
+                  data = k.key;
+      www();
+      break;
+    case "2":
+      twobtn.classList.add("active");
+                  data = k.key;
+      www();
+      break;
+    case "3":
+      threebtn.classList.add("active");
+                  data = k.key;
+      www();
+      break;
+    case "4":
+      fourbtn.classList.add("active");
+                  data = k.key;
+      www();
+      break;
+    case "5":
+      fivebtn.classList.add("active");
+                  data = k.key;
+      www();
+      break;
+    case "6":
+      sixbtn.classList.add("active");
+                  data = k.key;
+      www();
+      break;
+    case "7":
+      sevenbtn.classList.add("active");
+                  data = k.key;
+      www();
+      break;
+    case "8":
+      eightbtn.classList.add("active");
+                  data = k.key;
+      www();
+      break;
+    case "9":
+      ninebtn.classList.add("active");
+            data = k.key;
+      www();
+      break;
+    case "0":
+      zerobtn.classList.add("active");
+      data = k.key;
+      www();
+      break;
+    case "f":
+      fff.classList.add("active");
+      break;
+    case "Backspace":
+    case "c":
+    case "C":
+      ccc.classList.add("active");
+            dlt();
+      break;
+    case ".":
+      ppp.classList.add("active");
+      break;
+  }
+});
