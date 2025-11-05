@@ -1,18 +1,21 @@
-let first = 1;
-let num1 = "0";
-let num2 = "0";
-let op = "";
+let editingFirstNumber = 1;
+let firstNumber = "0";
+let secondNumber = "0";
+let currentOperator = "";
 let data = "";
+let firstAttemptToDeleteWhileEmpty = 0;
+let stopRepeatingBackspace = 0;
+let stopRepeatingTypingNumbers = 0;
 
-const buttons = document.querySelectorAll(".bbb");
-const oparations = document.querySelectorAll(".ooo");
-const ccc = document.getElementById("rr");
-const ee = document.getElementById("ee");
-const ppp = document.getElementById("ppp");
-const screen = document.getElementById("nnn");
-const opop = document.getElementById("opop");
-const fff = document.getElementById("fff");
-const n1 = document.getElementById("n1");
+const numbersButtons = document.querySelectorAll(".bbb");
+const operatorsButtons = document.querySelectorAll(".ooo");
+const clearButton = document.getElementById("rr");
+const equalButton = document.getElementById("ee");
+const pointButton = document.getElementById("ppp");
+const mainNumberOnScreen = document.getElementById("nnn");
+const operatorPlaceOnScreen = document.getElementById("opop");
+const allClearButton = document.getElementById("fff");
+const smallSizeNumberPlaceOnScreen = document.getElementById("n1");
 
 const plusbtn = document.querySelector(".plusbtn");
 const minusbtn = document.querySelector(".minusbtn");
@@ -29,88 +32,126 @@ const fivebtn = document.querySelector(".fivebtn");
 const zerobtn = document.querySelector(".zerobtn");
 const onebtn = document.querySelector(".onebtn");
 
-oparations.forEach(opopop);
-buttons.forEach(btnbtn);
+setupMultipleButtons(operatorsButtons, useOperators);
+setupMultipleButtons(numbersButtons, writeNumber);
 
-ccc.addEventListener("click", dlt);
-ee.addEventListener("click", cal1);
-ppp.addEventListener("click", point);
-fff.addEventListener("click", format);
+function setupMultipleButtons(buttons, job) {
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      data = button.dataset.v;
+    });
+    button.addEventListener("click", job);
+  });
+}
 
-function cal1() {
-  if (op !== "") {
-    switch (op) {
+clearButton.addEventListener("click", dlt);
+equalButton.addEventListener("click", calculate);
+pointButton.addEventListener("click", addPoint);
+allClearButton.addEventListener("click", format);
+
+function calculate() {
+  if (currentOperator !== "") {
+    switch (currentOperator) {
       case "+":
-        num1 = +num1 + +num2;
+        firstNumber = +firstNumber + +secondNumber;
         break;
       case "-":
-        num1 = +num1 - +num2;
+        firstNumber = +firstNumber - +secondNumber;
         break;
       case "x":
-        num1 = +num1 * +num2;
+        firstNumber = +firstNumber * +secondNumber;
         break;
       case "÷":
-        num1 = +num1 / +num2;
+        firstNumber = +firstNumber / +secondNumber;
         break;
     }
-    num1 = num1.toString();
-    screen.textContent = num1;
-    if (isNaN(num1) | (+num1 === Infinity)) {
+    firstNumber = firstNumber.toString();
+    mainNumberOnScreen.textContent = firstNumber;
+    if (isNaN(firstNumber) | (+firstNumber === Infinity)) {
       new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
       clear();
-    } else if (num1.length > 17) {
+    } else if (firstNumber.length > 17) {
       new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
-      screen.textContent = "Sorry, our screen isn’t that big.";
+      mainNumberOnScreen.textContent = "Sorry, our screen isn’t that big.";
       clear();
     } else {
       new Audio("./click.mp3").play();
-      first = 1;
-      num2 = "0";
-      op = "";
-      opop.textContent = op;
-      n1.textContent = "";
+      editingFirstNumber = 1;
+      secondNumber = "0";
+      currentOperator = "";
+      operatorPlaceOnScreen.textContent = currentOperator;
+      smallSizeNumberPlaceOnScreen.textContent = "";
     }
   } else {
     new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
   }
 }
+
 function dlt() {
-  let currentnum = first === 1 ? num1 : num2;
+  let currentnum = editingFirstNumber === 1 ? firstNumber : secondNumber;
   if (currentnum.length > 0) {
     currentnum = currentnum.slice(0, -1);
-    screen.textContent = currentnum;
+    mainNumberOnScreen.textContent = currentnum;
     if (currentnum !== "") {
       new Audio("./click.mp3").play();
     }
-    if (currentnum === "") {
+    if (currentnum === "" && editingFirstNumber === 1) {
       currentnum = "0";
-      screen.textContent = currentnum;
+      mainNumberOnScreen.textContent = currentnum;
       new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
+      stopRepeatingBackspace = 1;
+    }
+    if (
+      currentnum === "" &&
+      editingFirstNumber === 0 &&
+      firstAttemptToDeleteWhileEmpty < 1
+    ) {
+      currentnum = "0";
+      mainNumberOnScreen.textContent = currentnum;
+      new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
+      firstAttemptToDeleteWhileEmpty += 1;
+      stopRepeatingBackspace = 1;
+    }
+    if (
+      currentnum === "" &&
+      editingFirstNumber === 0 &&
+      firstAttemptToDeleteWhileEmpty >= 1
+    ) {
+      editingFirstNumber = 1;
+      secondNumber = "0";
+      currentOperator = "";
+      mainNumberOnScreen.textContent = firstNumber;
+      operatorPlaceOnScreen.textContent = currentOperator;
+      smallSizeNumberPlaceOnScreen.textContent = "";
+      new Audio("./click.mp3").play();
+      firstAttemptToDeleteWhileEmpty = 0;
+      return;
     }
   }
-  if (first === 1) {
-    num1 = currentnum;
+  if (editingFirstNumber === 1) {
+    firstNumber = currentnum;
   } else {
-    num2 = currentnum;
+    secondNumber = currentnum;
   }
 }
-function point() {
-  let currentnum = first === 1 ? num1 : num2;
+
+function addPoint() {
+  let currentnum = editingFirstNumber === 1 ? firstNumber : secondNumber;
   if (!currentnum.includes(".")) {
     new Audio("./click.mp3").play();
     currentnum += ".";
-    screen.textContent = currentnum;
+    mainNumberOnScreen.textContent = currentnum;
   } else {
     new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
   }
-  if (first === 1) {
-    num1 = currentnum;
+  if (editingFirstNumber === 1) {
+    firstNumber = currentnum;
   } else {
-    num2 = currentnum;
+    secondNumber = currentnum;
   }
 }
-function www() {
-  let currentnum = first === 1 ? num1 : num2;
+function writeNumber() {
+  let currentnum = editingFirstNumber === 1 ? firstNumber : secondNumber;
   if (currentnum.length < 17) {
     new Audio("./click.mp3").play();
     currentnum += data;
@@ -120,65 +161,55 @@ function www() {
   }
   if (currentnum.length === 17) {
     new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
+    stopRepeatingTypingNumbers = 1;
   }
-  if (first === 1) {
-    num1 = currentnum;
-    screen.textContent = num1;
+  if (editingFirstNumber === 1) {
+    firstNumber = currentnum;
+    mainNumberOnScreen.textContent = firstNumber;
   } else {
-    num2 = currentnum;
-    screen.textContent = num2;
+    secondNumber = currentnum;
+    mainNumberOnScreen.textContent = secondNumber;
   }
 }
-function vvv() {
-  if (first === 1) {
+function useOperators() {
+  if (editingFirstNumber === 1) {
     new Audio("./click.mp3").play();
-    n1.textContent = num1;
-    first = 0;
-    op = data;
-    opop.textContent = op;
-    screen.textContent = num2;
-  } else if (first === 0 && data === op) {
-    cal1();
+    smallSizeNumberPlaceOnScreen.textContent = firstNumber;
+    editingFirstNumber = 0;
+    currentOperator = data;
+    operatorPlaceOnScreen.textContent = currentOperator;
+    mainNumberOnScreen.textContent = secondNumber;
+  } else if (editingFirstNumber === 0 && data === currentOperator) {
+    calculate();
   } else {
     new Audio("./click.mp3").play();
-    op = data;
-    opop.textContent = op;
+    currentOperator = data;
+    operatorPlaceOnScreen.textContent = currentOperator;
   }
-}function clear() {
-  num1 = "0";
-  num2 = "0";
-  first = 1;
-  n1.textContent = "";
-  op = "";
-  opop.textContent = op;
+}
+function clear() {
+  firstNumber = "0";
+  secondNumber = "0";
+  editingFirstNumber = 1;
+  smallSizeNumberPlaceOnScreen.textContent = "";
+  currentOperator = "";
+  operatorPlaceOnScreen.textContent = currentOperator;
 }
 function format() {
   if (
-    num1 === "0" &&
-    num2 === "0" &&
-    first === 1 &&
-    n1.textContent === "" &&
-    op === "" &&
-    opop.textContent === op
+    firstNumber === "0" &&
+    secondNumber === "0" &&
+    editingFirstNumber === 1 &&
+    smallSizeNumberPlaceOnScreen.textContent === "" &&
+    currentOperator === "" &&
+    operatorPlaceOnScreen.textContent === currentOperator
   ) {
     new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
   } else {
     new Audio("./click.mp3").play();
-    screen.textContent = 0;
     clear();
+    mainNumberOnScreen.textContent = firstNumber;
   }
-}
-function opopop(oparation) {
-  oparation.addEventListener("click", function () {
-    data = oparation.dataset.v;
-  });
-  oparation.addEventListener("click", vvv);
-}
-function btnbtn(button) {
-  button.addEventListener("click", function () {
-    data = button.dataset.v;
-  });
-  button.addEventListener("click", www);
 }
 document.addEventListener("keyup", function (k) {
   switch (k.key) {
@@ -187,13 +218,13 @@ document.addEventListener("keyup", function (k) {
     case "m":
       minusbtn.classList.remove("active");
       data = "-";
-      vvv();
+      useOperators();
       break;
     case "p":
     case "P":
     case "+":
       data = "+";
-      vvv();
+      useOperators();
       plusbtn.classList.remove("active");
       break;
     case "*":
@@ -201,62 +232,73 @@ document.addEventListener("keyup", function (k) {
     case "X":
       multibtn.classList.remove("active");
       data = "x";
-      vvv();
+      useOperators();
       break;
     case "/":
     case "d":
     case "D":
       dividebtn.classList.remove("active");
       data = "÷";
-      vvv();
+      useOperators();
       break;
     case "=":
     case "Enter":
-      ee.classList.remove("active");
-      cal1();
+      equalButton.classList.remove("active");
+      calculate();
       break;
     case "1":
       onebtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "2":
       twobtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "3":
       threebtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "4":
       fourbtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "5":
       fivebtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "6":
       sixbtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "7":
       sevenbtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "8":
       eightbtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "9":
       ninebtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "0":
       zerobtn.classList.remove("active");
+      stopRepeatingTypingNumbers = 0;
       break;
     case "f":
-      fff.classList.remove("active");
+      allClearButton.classList.remove("active");
       format();
       break;
     case "Backspace":
     case "c":
     case "C":
-      ccc.classList.remove("active");
+      clearButton.classList.remove("active");
+      stopRepeatingBackspace = 0;
       break;
     case ".":
-      ppp.classList.remove("active");
-      point();
+      pointButton.classList.remove("active");
+      addPoint();
       break;
   }
 });
@@ -284,69 +326,102 @@ document.addEventListener("keydown", function (k) {
       break;
     case "=":
     case "Enter":
-      ee.classList.add("active");
+      equalButton.classList.add("active");
       break;
     case "1":
       onebtn.classList.add("active");
-                  data = k.key;
-      www();
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
+      data = k.key;
+      writeNumber();
       break;
     case "2":
       twobtn.classList.add("active");
-                  data = k.key;
-      www();
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
+      data = k.key;
+      writeNumber();
       break;
     case "3":
       threebtn.classList.add("active");
-                  data = k.key;
-      www();
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
+      data = k.key;
+      writeNumber();
       break;
     case "4":
       fourbtn.classList.add("active");
-                  data = k.key;
-      www();
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
+      data = k.key;
+      writeNumber();
       break;
     case "5":
       fivebtn.classList.add("active");
-                  data = k.key;
-      www();
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
+      data = k.key;
+      writeNumber();
       break;
     case "6":
       sixbtn.classList.add("active");
-                  data = k.key;
-      www();
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
+      data = k.key;
+      writeNumber();
       break;
     case "7":
       sevenbtn.classList.add("active");
-                  data = k.key;
-      www();
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
+      data = k.key;
+      writeNumber();
       break;
     case "8":
       eightbtn.classList.add("active");
-                  data = k.key;
-      www();
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
+      data = k.key;
+      writeNumber();
       break;
     case "9":
       ninebtn.classList.add("active");
-            data = k.key;
-      www();
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
+      data = k.key;
+      writeNumber();
       break;
     case "0":
       zerobtn.classList.add("active");
+      if (stopRepeatingTypingNumbers) {
+        return;
+      }
       data = k.key;
-      www();
+      writeNumber();
       break;
     case "f":
-      fff.classList.add("active");
+      allClearButton.classList.add("active");
       break;
     case "Backspace":
     case "c":
     case "C":
-      ccc.classList.add("active");
-            dlt();
+      clearButton.classList.add("active");
+      if (stopRepeatingBackspace) {
+        return;
+      }
+      dlt();
       break;
     case ".":
-      ppp.classList.add("active");
+      pointButton.classList.add("active");
       break;
   }
 });
