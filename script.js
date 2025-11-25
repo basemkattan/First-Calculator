@@ -110,6 +110,9 @@ function dlt() {
       mainNumberOnScreen.textContent = currentnum;
       new Audio("./notification-alert-269289 (mp3cut.net).mp3").play();
       firstAttemptToDeleteWhileEmpty += 1;
+      setTimeout(() => {
+        firstAttemptToDeleteWhileEmpty = 0;
+      }, 700);
       stopRepeatingBackspace = 1;
     }
     if (
